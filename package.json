@@ -41,6 +41,9 @@
     "typeorm": "^0.2.0"
   },
   "scripts": {
-    "start": "tsc && node src/index.js"
+    "start": "tsc && node build/src/index.js",
+    "build-entity": "tsc --experimentalDecorators --rootDir . --outDir build src/entity/*.ts",
+    "migration:diff": "npm run build-entity && node_modules/typeorm/cli.js migration:generate -o -n",
+    "migration:migrate": "node_modules/typeorm/cli.js migration:run"
   }
 }

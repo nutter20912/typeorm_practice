@@ -2,7 +2,9 @@
 
 1. clone repository
 2. run `npm i`
-3. run `npm start`
+3. copy `ormconfig.json.example` to `ormconfig.json` and edit your own database connection configuration
+4. run `npm run migration:migrate`
+5. run `npm start`
 
 ## How to use
 

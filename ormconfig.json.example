@@ -7,7 +7,7 @@
   "database": "typeorm",
   "synchronize": true,
   "entities": [
-    "src/entity/*.js"
+    "build/src/entity/*.js"
   ],
   "subscribers": [
     "src/subscriber/*.js"
