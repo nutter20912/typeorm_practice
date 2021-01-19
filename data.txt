@@ -1,0 +1,4 @@
+{
+    "diff": 1,
+    "operator": "ab"
+}
