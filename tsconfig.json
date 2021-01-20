@@ -10,8 +10,17 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "types": ["reflect-metadata"],
+    "rootDir": ".",
+    "outDir": "build",
   },
+  "include": [
+    "src",
+    "test"
+  ],
   "exclude": [
+    "tmp",
+    "temp",
+    "build",
     "node_modules"
   ]
 }
