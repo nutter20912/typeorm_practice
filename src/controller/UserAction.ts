@@ -1,7 +1,6 @@
 import { Context } from 'koa';
-import { getManager } from 'typeorm';
-import { User } from '../entity/User';
 import ResourceNotFound from '../exception/ResourceNotFound';
+import { User } from '../models/User.model';
 
 class UserAction {
   /**
@@ -10,7 +9,7 @@ class UserAction {
    * @param context 上下文
    */
   public async show(context: Context): Promise<void> {
-    const user = await getManager().findOne(User, context.params.id);
+    const user = await User.findOne({ where: { id: context.params.id } });
 
     if (!user) {
       throw new ResourceNotFound('User not found', 'A001');
@@ -29,11 +28,12 @@ class UserAction {
    */
   public async store(context: Context): Promise<void> {
     const { name } = context.request.body;
-    const user = new User();
-    user.setName(name)
-      .setCash(0);
 
-    await getManager().save(user);
+    const user = await User.create({
+      name,
+      cash: 0,
+      version: 1,
+    });
 
     context.body = {
       result: 'ok',

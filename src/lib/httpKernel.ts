@@ -1,8 +1,6 @@
 import { Context, Next } from 'koa';
 
 export default class HttpKernel {
-  public constructor(app) { }
-
   /**
    * Exception 例外處理
    * @param context 上下文

@@ -5,7 +5,7 @@
   "username": "root",
   "password": "root",
   "database": "typeorm",
-  "synchronize": true,
+  "synchronize": false,
   "entities": [
     "build/src/entity/*.js"
   ],
