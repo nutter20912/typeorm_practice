@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
-import { Record } from './Record';
+import { Record } from './Record.entity';
 
 @Entity()
 export class User {
@@ -18,7 +18,7 @@ export class User {
   @VersionColumn()
   private version: number;
 
-  @OneToMany(type => Record, record => record.getUser, { cascade: true })
+  @OneToMany(() => Record, (record) => record.getUser, { cascade: true })
   @JoinTable()
   private records: Record[];
 
@@ -28,10 +28,10 @@ export class User {
   @Column({ name: 'cash', type: 'decimal', precision: 10, scale: 2, comment: '額度' })
   private cash: number;
 
-  @CreateDateColumn({ name: 'createdat', type: 'datetime', comment: '建立時間' })
+  @CreateDateColumn({ name: 'created_at', type: 'datetime', comment: '建立時間' })
   private createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updatedat', type: 'datetime', comment: '更新時間' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'datetime', comment: '更新時間' })
   private updatedAt: Date;
 
   /**
@@ -149,4 +149,3 @@ export class User {
     return this;
   }
 }
-

@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base",
+        "eslint:recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-member-accessibility": "error",
+      "class-methods-use-this": "off",
+      "consistent-return": "off",
+      "import/prefer-default-export": "off",
+      "object-curly-newline": ["error", { "consistent": true }],
+      "no-param-reassign": ["error", { "props": false }],
+      "import/extensions": "off",
+      "import/no-unresolved": "off",
+      "no-underscore-dangle": "off"
+    }
+}

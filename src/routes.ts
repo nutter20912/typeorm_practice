@@ -10,6 +10,7 @@ export const AppRoutes = [
   { method: 'get', path: '/user/:id', action: UserAction.show },
 
   // cash
-  { method: 'put', path: '/user/:id/cash/add', action: CashAction.add },
+  { method: 'put', path: '/user/:id/cash/addByTypeOrm', action: CashAction.addByTypeOrm },
+  { method: 'put', path: '/user/:id/cash/addBySequelizeOrm', action: CashAction.addBySequelizeOrm },
   { method: 'put', path: '/user/:id/cash/addOrFail', action: CashAction.addOrFail },
 ];

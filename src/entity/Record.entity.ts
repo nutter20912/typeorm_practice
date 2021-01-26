@@ -5,14 +5,14 @@ import {
   ManyToOne,
   CreateDateColumn,
 } from 'typeorm';
-import { User } from './User';
+import { User } from './User.entity';
 
 @Entity()
 export class Record {
   @PrimaryGeneratedColumn()
   private id: number;
 
-  @ManyToOne(() => User, user => user.getRecords)
+  @ManyToOne(() => User, (user) => user.getRecords)
   private user: User;
 
   @Column({ name: 'operator', type: 'varchar', length: 100, comment: '操作者' })
