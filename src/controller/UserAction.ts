@@ -1,21 +1,31 @@
+import { injectable } from 'inversify';
 import { Context } from 'koa';
 import ResourceNotFound from '../exception/ResourceNotFound';
 import { User } from '../models/User.model';
+import { Controller } from '../contracts/Controller';
 
-class UserAction {
+@injectable()
+export default class UserAction implements Controller {
+  public getRoutes() {
+    return [
+      { method: 'post', path: '/user', action: this.store },
+      { method: 'get', path: '/user/:id', action: this.show },
+    ];
+  }
+
   /**
    * 查詢
    *
    * @param context 上下文
    */
-  public async show(context: Context): Promise<void> {
+  public async show(context: Context): Promise<object> {
     const user = await User.findOne({ where: { id: context.params.id } });
 
     if (!user) {
       throw new ResourceNotFound('User not found', 'A001');
     }
 
-    context.body = {
+    return {
       result: 'ok',
       res: user,
     };
@@ -26,7 +36,7 @@ class UserAction {
    *
    * @param context 上下文
    */
-  public async store(context: Context): Promise<void> {
+  public async store(context: Context): Promise<object> {
     const { name } = context.request.body;
 
     const user = await User.create({
@@ -35,11 +45,9 @@ class UserAction {
       version: 1,
     });
 
-    context.body = {
+    return {
       result: 'ok',
       res: user,
     };
   }
 }
-
-export default new UserAction();

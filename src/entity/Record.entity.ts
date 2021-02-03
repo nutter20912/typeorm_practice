@@ -5,7 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
 } from 'typeorm';
-import { User } from './User.entity';
+import { User } from '.';
 
 @Entity()
 export class Record {

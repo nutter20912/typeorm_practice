@@ -1,17 +1,28 @@
 import { Context } from 'koa';
+import { injectable, inject } from 'inversify';
 import ResourceNotFound from '../exception/ResourceNotFound';
 import { User as UserEntity } from '../entity/User.entity';
 import { Record as RecordEntity } from '../entity/Record.entity';
 import { User as UserModel } from '../models/User.model';
 import { Record as RecordModel } from '../models/Record.model';
+import { Controller } from '../contracts/Controller';
 
-class CashAction {
+@injectable()
+export default class CashAction implements Controller {
+  public getRoutes() {
+    return [
+      { method: 'put', path: '/user/:id/cash/addByTypeOrm', action: this.addByTypeOrm },
+      { method: 'put', path: '/user/:id/cash/addBySequelizeOrm', action: this.addBySequelizeOrm },
+      { method: 'put', path: '/user/:id/cash/addOrFail', action: this.addOrFail },
+    ];
+  }
+
   /**
    * typeOrm 增額.悲觀鎖
    *
    * @param context 上下文
    */
-  public async addByTypeOrm(context: Context): Promise<void> {
+  public async addByTypeOrm(context: Context): Promise<object> {
     const { id } = context.params;
     const { diff, operator } = context.request.body;
     const { typeorm: conn } = context;
@@ -41,7 +52,7 @@ class CashAction {
       return user;
     });
 
-    context.body = {
+    return {
       result: 'ok',
       res: result,
     };
@@ -52,7 +63,7 @@ class CashAction {
    *
    * @param context 上下文
    */
-  public async addBySequelizeOrm(context: Context): Promise<void> {
+  public async addBySequelizeOrm(context: Context): Promise<object> {
     const { id } = context.params;
     const { diff, operator } = context.request.body;
     const { sequelize: conn } = context;
@@ -83,7 +94,7 @@ class CashAction {
       return user;
     });
 
-    context.body = {
+    return {
       result: 'ok',
       res: result,
     };
@@ -94,7 +105,7 @@ class CashAction {
    *
    * @param context 上下文
    */
-  public async addOrFail(context: Context): Promise<void> {
+  public async addOrFail(context: Context): Promise<object> {
     const { id } = context.params;
     const { diff, operator } = context.request.body;
     const { sequelize: conn } = context;
@@ -120,11 +131,9 @@ class CashAction {
       return user;
     });
 
-    context.body = {
+    return {
       result: 'ok',
       res: result,
     };
   }
 }
-
-export default new CashAction();

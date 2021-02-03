@@ -8,15 +8,15 @@ export default {
   sequelize: {
     host: 'localhost',
     port: 3306,
-    database: 'typeorm',
+    database: 'sequelize',
     username: 'root',
     password: 'root',
     dialect: 'mysql',
     pool: {
       max: 3,
-      min: 0,
+      min: 1,
       acquire: 30000,
-      idle: 10000,
+      idle: 15000,
     },
   },
 };

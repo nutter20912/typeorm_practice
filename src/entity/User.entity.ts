@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
-import { Record } from './Record.entity';
+import { Record } from '.';
 
 @Entity()
 export class User {
