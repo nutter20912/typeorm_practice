@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "cli",
+            "skipFiles": [
+                "<node_internals>/**",
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ],
+            "runtimeExecutable": "sh",
+            "runtimeArgs": ["debug.sh"]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Test",
+            "skipFiles": [
+                "<node_internals>/**",
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ],
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run-script", "start"]
+        },
+    ]
+}
