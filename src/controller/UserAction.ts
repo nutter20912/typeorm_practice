@@ -1,11 +1,12 @@
-import { injectable } from 'inversify';
+import { provide } from 'inversify-binding-decorators';
 import { Context } from 'koa';
 import ResourceNotFound from '../exception/ResourceNotFound';
 import { User } from '../models/User.model';
 import { Controller } from '../contracts/Controller';
+import { TYPES } from '../lib/types';
 
-@injectable()
-export default class UserAction implements Controller {
+@provide(TYPES.Controller)
+export class UserAction implements Controller {
   public getRoutes() {
     return [
       { method: 'post', path: '/user', action: this.store },

@@ -1,14 +1,18 @@
-/* eslint-disable max-classes-per-file */
-import { injectable, inject } from 'inversify';
-import { Weapon, ThrowableWeapon } from '../contracts/Services';
-import { TYPES } from '../../types';
+import { inject } from 'inversify';
+import { provide } from 'inversify-binding-decorators';
 import { Controller } from '../contracts/Controller';
+import { Weapon } from '../contracts/Services';
+import { TYPES, SERVICES } from '../lib/types';
 
-@injectable()
-export default class Ninja implements Controller {
-  private _katana: Weapon;
+@provide(TYPES.Controller)
+export class Ninja implements Controller {
+  private katana: Weapon;
 
-  private _shuriken: ThrowableWeapon;
+  public constructor(
+    @inject(SERVICES.Weapon) katana: Weapon,
+  ) {
+    this.katana = katana;
+  }
 
   public getRoutes() {
     return [
@@ -16,20 +20,8 @@ export default class Ninja implements Controller {
     ];
   }
 
-  public constructor(
-    @inject(TYPES.Weapon) katana: Weapon,
-    @inject(TYPES.ThrowableWeapon) shuriken: ThrowableWeapon,
-  ) {
-    this._katana = katana;
-    this._shuriken = shuriken;
-  }
-
   public fight(ctx) {
-    ctx.body = this._katana.hit();
-    return this._katana.hit();
-  }
-
-  public sneak() {
-    return this._shuriken.throw();
+    ctx.body = this.katana.hit();
+    return this.katana.hit();
   }
 }

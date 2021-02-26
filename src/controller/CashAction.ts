@@ -1,14 +1,21 @@
 import { Context } from 'koa';
-import { injectable, inject } from 'inversify';
+import { provide } from 'inversify-binding-decorators';
 import ResourceNotFound from '../exception/ResourceNotFound';
 import { User as UserEntity } from '../entity/User.entity';
 import { Record as RecordEntity } from '../entity/Record.entity';
 import { User as UserModel } from '../models/User.model';
 import { Record as RecordModel } from '../models/Record.model';
 import { Controller } from '../contracts/Controller';
+import { TYPES } from '../lib/types';
 
-@injectable()
-export default class CashAction implements Controller {
+@provide(TYPES.Controller)
+export class CashAction implements Controller {
+  // public constructor(
+  //   @inject(SERVICES.Weapon) katana: Weapon,
+  // ) {
+  //   this.katana = katana;
+  // }
+
   public getRoutes() {
     return [
       { method: 'put', path: '/user/:id/cash/addByTypeOrm', action: this.addByTypeOrm },

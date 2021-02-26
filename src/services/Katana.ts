@@ -1,10 +1,19 @@
-import { injectable } from 'inversify';
-import 'reflect-metadata';
+import { inject } from 'inversify';
+import { provide } from 'inversify-binding-decorators';
 import { Weapon } from '../contracts/Services';
+import { SERVICES } from '../lib/types';
 
-@injectable()
+@provide(SERVICES.Weapon)
 export class Katana implements Weapon {
+  private shuriken;
+
+  public constructor(
+    @inject(SERVICES.ThrowableWeapon) shuriken,
+  ) {
+    this.shuriken = shuriken;
+  }
+
   public hit() {
-    return 'cut!';
+    return this.shuriken.throw();
   }
 }

@@ -2,17 +2,25 @@ import Koa, { Context, Next } from 'koa';
 import type { Middleware } from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
-import config from '../config';
 import database from './database';
-import { AppContainer } from './Container';
+import AppContainer from './Container';
 import { Controller } from '../contracts/Controller';
-import { TYPES } from '../../types';
+import { TYPES } from './types';
 
 export class HttpKernel {
+  /**
+   * http applications
+   */
   private app: Koa;
 
+  /**
+   * http 路由
+   */
   private router: Router;
 
+  /**
+   * 應用程式容器
+   */
   private container: AppContainer;
 
   public constructor() {
@@ -21,6 +29,9 @@ export class HttpKernel {
     this.container = new AppContainer();
   }
 
+  /**
+   * 建立應用程式
+   */
   public build(): Koa {
     this.registerContainer();
 
@@ -31,15 +42,21 @@ export class HttpKernel {
     return this.app;
   }
 
+  /**
+   * 設定 設定檔
+   * @param appConfig
+   */
   public setConfig(appConfig): this {
     this.app.context.config = appConfig;
 
     return this;
   }
 
+  /**
+   * 登記容器
+   */
   public async registerContainer() {
-    await this.container.registerControllers();
-    await this.container.registerServices();
+    await this.container.register();
 
     this.app.use(this.getErrorHandler());
     database(this.app);
@@ -72,7 +89,7 @@ export class HttpKernel {
    * @param router
    */
   public async registerRoutes(): Promise<void> {
-    console.log('get');
+    console.log('getAll');
     const controllers = this.container.getAll<Controller>(TYPES.Controller);
 
     controllers.forEach((controller) => {
